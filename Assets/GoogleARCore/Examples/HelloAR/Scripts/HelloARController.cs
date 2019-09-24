@@ -147,7 +147,7 @@ namespace GoogleARCore.Examples.HelloAR
                     {
                         return;
                     }
-                    andyObject.get(false);
+                    andyObject.SetActive(false);
                     GameObject plane =  GameObject.Find("Plane Generator");
                     sum++;
                     plane.SetActive(false);
