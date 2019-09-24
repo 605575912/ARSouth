@@ -39,14 +39,14 @@ namespace GoogleARCore.Examples.Common
         /// used across the application to avoid per-frame allocations.
         /// </summary>
         private List<DetectedPlane> m_NewPlanes = new List<DetectedPlane>();
-
+        public bool show = true;
         /// <summary>
         /// The Unity Update method.
         /// </summary>
         public void Update()
         {
             // Check that motion tracking is tracking.
-            if (Session.Status != SessionStatus.Tracking)
+            if (Session.Status != SessionStatus.Tracking&& show)
             {
                 return;
             }
@@ -54,7 +54,12 @@ namespace GoogleARCore.Examples.Common
             // Iterate over planes found in this frame and instantiate corresponding GameObjects to
             // visualize them.
             Session.GetTrackables<DetectedPlane>(m_NewPlanes, TrackableQueryFilter.New);
-            for (int i = 0; i < m_NewPlanes.Count; i++)
+            int count = m_NewPlanes.Count;
+            if (count > 10) {
+                //count = 10;
+            }
+          
+            for (int i = 0; i < count; i++)
             {
                 // Instantiate a plane visualization prefab and set it to track the new plane. The
                 // transform is set to the origin with an identity rotation since the mesh for our

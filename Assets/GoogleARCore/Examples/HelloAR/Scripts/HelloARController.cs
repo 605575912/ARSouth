@@ -147,8 +147,11 @@ namespace GoogleARCore.Examples.HelloAR
                     {
                         return;
                     }
+                    GameObject plane =  GameObject.Find("Plane Generator");
                     sum++;
-                    ClipPlane clipPlane = andyObject.AddComponent<ClipPlane>();
+                    plane.SetActive(false);
+
+                        ClipPlane clipPlane = andyObject.AddComponent<ClipPlane>();
                     // Instantiate Andy model at the hit pose.
                     // var andyObject = Instantiate(prefab, hit.Pose.position, hit.Pose.rotation);
                     andyObject.transform.position = new Vector3(hit.Pose.position.x, hit.Pose.position.y+0.02f, hit.Pose.position.z);

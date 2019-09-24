@@ -90,8 +90,8 @@ namespace GoogleARCore.Examples.Common
             }
             else if (m_DetectedPlane.TrackingState != TrackingState.Tracking)
             {
-                 m_MeshRenderer.enabled = false;
-                 return;
+                m_MeshRenderer.enabled = false;
+                return;
             }
 
             m_MeshRenderer.enabled = true;
@@ -106,8 +106,10 @@ namespace GoogleARCore.Examples.Common
         public void Initialize(DetectedPlane plane)
         {
             m_DetectedPlane = plane;
+            //m_MeshRenderer.material.SetColor(
+            //    "_GridColor", k_PlaneColors[s_PlaneCount++ % k_PlaneColors.Length]);
             m_MeshRenderer.material.SetColor(
-                "_GridColor", k_PlaneColors[s_PlaneCount++ % k_PlaneColors.Length]);
+            "_GridColor", k_PlaneColors[0]);
             m_MeshRenderer.material.SetFloat("_UvRotation", Random.Range(0.0f, 360.0f));
 
             Update();
