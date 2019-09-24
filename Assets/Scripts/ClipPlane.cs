@@ -36,9 +36,10 @@ public class ClipPlane : MonoBehaviour
             }
             MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
 
-           // Location location = child.gameObject.AddComponent<Location>();
+            // Location location = child.gameObject.AddComponent<Location>();
             if (meshRenderer != null)
             {
+                meshRenderer.enabled = false;
                 float y = meshRenderer.bounds.size.y / 2 + child.transform.position.y;
                 float _y = child.transform.position.y - meshRenderer.bounds.size.y / 2;
                 if (!child.name.Equals("LH_43") && !child.name.Equals("B_01") && !child.name.Equals("B_02") && !child.name.Equals("B_03"))
@@ -101,11 +102,10 @@ public class ClipPlane : MonoBehaviour
         //    Debug.Log(minY + "---" + maxY + "=@==" + transform.position.y);
         //}
         //   Debug.Log(minX + "===" + maxX);
-        Debug.Log(minZ + "---" + maxZ + "=@==" + transform.position.z);
+        //Debug.Log(minZ + "---" + maxZ + "=@==" + transform.position.z);
         //   maxX = maxX + 1 * sacale;
         maxZ = maxZ - 1 * sacale;
-        //setX(0);
-        //setY(0);
+
 
     }
     void OnGUI()
@@ -113,11 +113,11 @@ public class ClipPlane : MonoBehaviour
 
 
     }
-    private float sy = -1;
+    private float sy = 0;
     private float sx = 0;
     private float sz = 0;
     // Update is called once per frame
-    int index = 0;
+    int index = -1;
     void Update()
     {
         if (sy != slidery.value)
@@ -137,31 +137,33 @@ public class ClipPlane : MonoBehaviour
             index = 2;
             sz = sliderz.value;
         }
+        valuey = valuey - 0.01f;
         foreach (Transform child in gameObject.transform)
         {
 
             MeshRenderer meshRenderer = child.GetComponent<MeshRenderer>();
- 
+
             if (meshRenderer != null)
             {
-               // location.lat =0;
+                meshRenderer.enabled = true;
+                // location.lat =0;
                 List<Material> materials = new List<Material>();
                 meshRenderer.GetSharedMaterials(materials);
                 foreach (Material material in materials)
                 {
+                    if (index == -1)
+                    {
+
+                        if (valuey <= 0)
+                        {
+                            valuey = 0;
+                        }
+                        _topYVector(valuey, material);
+                    }
+                    else
                     if (index == 0)
                     {
-                        _topVector(slidery.value, material);
-                        //float silier = slidery.value;
-                        //silier = 1 - silier;
-
-                        //float y = meshRenderer.bounds.size.x / 2 + child.transform.position.x;
-                        //float _y = child.transform.position.x - meshRenderer.bounds.size.x / 2;
-
-                        //float _Y = (maxY - minY) * silier + minY;
-
-                        //material.SetVector("_topVector", new Vector4(-y, minY - 0 * sacale, -13 * sacale + transform.position.z, 0));
-                        //material.SetVector("_topMaxVector", new Vector4(y, _Y + 0 * sacale, 30f * sacale + transform.position.z, 0));
+                        _topYVector(slidery.value, material);
                     }
                     else
                     if (index == 1)
@@ -181,7 +183,20 @@ public class ClipPlane : MonoBehaviour
         }
 
     }
-    private void _topVector(float silier, Material m)
+   private float valuey = 1;
+    public void show()
+    {
+        if (index != -1)
+        {
+            return;
+        }
+        valuey = valuey + 0.01f;
+        if (valuey >= 1)
+        {
+
+        }
+    }
+    private void _topYVector(float silier, Material m)
     {
         silier = 1 - silier;
         float _Y = (maxY - minY) * silier + minY;
